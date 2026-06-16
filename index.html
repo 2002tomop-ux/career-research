@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>就活企業リサーチ帳</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif; background: #f7f6f3; color: #1a1a1a; font-size: 14px; line-height: 1.6; }
+
+  header { background: #fff; border-bottom: 1px solid #e5e3de; padding: 16px 24px; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .logo { font-size: 15px; font-weight: 600; color: #1a1a1a; white-space: nowrap; }
+  .logo span { color: #534AB7; }
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; flex: 1; }
+  .filter-btn { font-size: 12px; padding: 5px 12px; border-radius: 99px; border: 1px solid #d8d6d0; background: #fff; cursor: pointer; color: #555; transition: all 0.15s; white-space: nowrap; }
+  .filter-btn:hover { border-color: #534AB7; color: #534AB7; }
+  .filter-btn.active { background: #534AB7; border-color: #534AB7; color: #fff; }
+  .count-label { font-size: 12px; color: #888; white-space: nowrap; align-self: center; }
+
+  main { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+
+  .section { margin-bottom: 32px; }
+  .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .section-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .section-name { font-size: 13px; font-weight: 600; color: #555; text-transform: uppercase; letter-spacing: 0.06em; }
+  .section-count { font-size: 12px; color: #aaa; }
+
+  .card { background: #fff; border: 1px solid #e5e3de; border-radius: 12px; padding: 16px 18px; margin-bottom: 10px; transition: box-shadow 0.15s; }
+  .card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .card.starred { border-left: 3px solid #f0c040; }
+  .card-top { display: flex; align-items: flex-start; gap: 12px; }
+  .card-star { background: none; border: none; cursor: pointer; font-size: 18px; color: #ccc; flex-shrink: 0; padding: 0; line-height: 1; transition: color 0.15s; margin-top: 1px; }
+  .card-star.on { color: #f0c040; }
+  .card-body { flex: 1; min-width: 0; }
+  .card-name { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+  .tag { font-size: 11px; padding: 2px 8px; border-radius: 99px; font-weight: 500; }
+  .tag-shinshu { background: #EEF0FE; color: #3C3489; }
+  .tag-research { background: #E1F5EE; color: #0F6E56; }
+  .tag-rivalry { background: #FAEEDA; color: #854F0B; }
+  .tag-urgent { background: #FCEBEB; color: #A32D2D; }
+  .tag-ok { background: #EAF3DE; color: #3B6D11; }
+  .card-memo { font-size: 13px; color: #444; line-height: 1.6; margin-bottom: 10px; }
+
+  .schedule { border-top: 1px solid #f0ede8; padding-top: 10px; margin-top: 10px; }
+  .schedule-title { font-size: 11px; font-weight: 600; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 7px; }
+  .schedule-rows { display: flex; flex-direction: column; gap: 5px; }
+  .schedule-row { display: flex; align-items: flex-start; gap: 10px; }
+  .schedule-date { font-size: 12px; font-weight: 600; color: #534AB7; white-space: nowrap; min-width: 90px; }
+  .schedule-label { font-size: 12px; color: #555; }
+  .schedule-badge { font-size: 10px; padding: 1px 7px; border-radius: 99px; margin-left: 6px; vertical-align: middle; }
+  .badge-done { background: #EAF3DE; color: #3B6D11; }
+  .badge-urgent { background: #FCEBEB; color: #A32D2D; }
+  .badge-pending { background: #f0ede8; color: #888; }
+
+  .check-area { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .check-label { font-size: 12px; color: #888; }
+  .check-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #555; cursor: pointer; }
+  .check-item input { cursor: pointer; }
+
+  .empty { text-align: center; padding: 40px; color: #aaa; font-size: 14px; }
+
+  .progress-section { background: #fff; border: 1px solid #e5e3de; border-radius: 12px; padding: 16px 18px; margin-bottom: 24px; }
+  .progress-title { font-size: 13px; font-weight: 600; color: #555; margin-bottom: 10px; }
+  .progress-bars { display: flex; flex-direction: column; gap: 8px; }
+  .prog-row { display: flex; align-items: center; gap: 10px; }
+  .prog-label { font-size: 12px; color: #555; min-width: 120px; }
+  .prog-track { flex: 1; height: 6px; background: #f0ede8; border-radius: 99px; overflow: hidden; }
+  .prog-fill { height: 100%; border-radius: 99px; transition: width 0.4s; }
+  .prog-num { font-size: 12px; color: #888; min-width: 36px; text-align: right; }
+
+  footer { text-align: center; padding: 32px 16px; font-size: 12px; color: #bbb; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">就活リサーチ帳 <span>2027年9月卒</span></div>
+  <div class="filters">
+    <button class="filter-btn active" onclick="filter('all')">すべて</button>
+    <button class="filter-btn" onclick="filter('cat1')">① 文具メーカー</button>
+    <button class="filter-btn" onclick="filter('cat2')">② インク・塗料・コーティング</button>
+    <button class="filter-btn" onclick="filter('cat3')">③ 精密部品・表面処理</button>
+    <button class="filter-btn" onclick="filter('cat4')">④ 精密機器・文具周辺</button>
+    <button class="filter-btn" onclick="filter('starred')">★ お気に入り</button>
+  </div>
+  <div class="count-label" id="count-label">全13社</div>
+</header>
+
+<main>
+  <div class="progress-section">
+    <div class="progress-title">全体進捗</div>
+    <div class="progress-bars" id="progress-bars"></div>
+  </div>
+
+  <div id="company-list"></div>
+</main>
+
+<footer>最終更新：2026年6月 ／ 情報は各社公式サイトで必ず確認してください</footer>
+
+<script>
+const STORAGE_KEY = 'career_research_v1';
+
+const CATEGORIES = [
+  { id: 'cat1', label: '① 文具メーカー', color: '#534AB7' },
+  { id: 'cat2', label: '② インク・塗料・コーティング', color: '#1D9E75' },
+  { id: 'cat3', label: '③ 精密部品・表面処理', color: '#378ADD' },
+  { id: 'cat4', label: '④ 精密機器・文具周辺', color: '#BA7517' },
+];
+
+const COMPANIES = [
+  {
+    id: 'kokuyo', cat: 'cat1',
+    name: 'コクヨ',
+    tags: [
+      { text: '最終面接経験あり', cls: 'tag-rivalry' },
+      { text: '信州大採用実績◎', cls: 'tag-shinshu' },
+      { text: 'リベンジ本命', cls: 'tag-research' },
+    ],
+    memo: '文具＋家具を両方手がける。炭素鋼の皮膜処理研究と素材・表面処理で接点大。2年前の最終面接では「感性・ユーザー視点」が不足していたと分析。今年は研究×接客経験を組み合わせた語りで差別化。',
+    schedule: [
+      { date: '今すぐ', label: 'インターンサイト（kokuyo-internship.com）でマイページ登録', badge: 'urgent' },
+      { date: '6/30（火）12:00', label: '夏インターン 応募締め切り ⚠️ あと18日！', badge: 'urgent' },
+      { date: '8〜9月', label: '夏インターン参加（過去は5days / 1dayコース）', badge: 'pending' },
+      { date: '2026年秋〜', label: '秋冬インターン→早期選考ルート', badge: 'pending' },
+      { date: '2027年春', label: '本選考 ES提出・面接', badge: 'pending' },
+    ],
+    checks: ['マイページ登録', '夏インターンES提出（6/30 12:00締め）', 'インターン参加', '本選考ES提出'],
+    url: 'https://recruit.kokuyo.co.jp/',
+    mypage: 'https://kokuyo-internship.com/',
+  },
+  {
+    id: 'mitsubishi', cat: 'cat1',
+    name: '三菱鉛筆',
+    tags: [
+      { text: '信州大採用実績◎', cls: 'tag-shinshu' },
+      { text: '機械系研究直結', cls: 'tag-research' },
+      { text: '穴場候補', cls: 'tag-ok' },
+    ],
+    memo: 'リクナビ掲載の採用大学に信州大学が明記。研究開発職は「研究テーマより研究へのアプローチを重視」と公式に明言しており、学校名より内容重視。機械系3daysインターンがあり、専攻と直結。採用人数はコクヨより少なめだが学歴フィルターは緩い。',
+    schedule: [
+      { date: '7〜8月', label: '機械系3daysインターン ES提出（過去は7月開催、28卒詳細は公式確認）', badge: 'pending' },
+      { date: '8〜9月', label: '機械系3daysインターン参加', badge: 'pending' },
+      { date: '11〜12月', label: '化学系・冬インターン（過去実績あり）', badge: 'pending' },
+      { date: '2027年春', label: '本選考 ES提出', badge: 'pending' },
+    ],
+    checks: ['公式サイト確認・マイページ登録', '夏インターンES提出', 'インターン参加', '本選考ES提出'],
+    url: 'https://www.mpuni.co.jp/jinji/',
+    mypage: 'https://www.mpuni.co.jp/jinji/entry/',
+  },
+  {
+    id: 'pilot', cat: 'cat1',
+    name: 'パイロットコーポレーション',
+    tags: [
+      { text: '2次面接経験あり', cls: 'tag-rivalry' },
+      { text: '学歴フィルターなし', cls: 'tag-ok' },
+    ],
+    memo: '内定者はMARCH・日東駒専など幅広く、地方国立大に不利なし。インク・金属素材開発の研究開発職あり。2年前は2次面接落ちだが、今年は共同研究・リーダー経験という新たな武器がある。技術系1day仕事体験などが例年開催。',
+    schedule: [
+      { date: '6〜8月', label: '夏インターン（28卒詳細は公式サイト確認。例年8〜9月開催）', badge: 'pending' },
+      { date: '2027年春', label: '本選考 ES提出・面接', badge: 'pending' },
+    ],
+    checks: ['公式サイト確認・マイページ登録', '夏インターンES提出', '本選考ES提出'],
+    url: 'https://pilot-recruit.snar.jp/',
+    mypage: 'https://pilot-recruit.snar.jp/',
+  },
+  {
+    id: 'zebra', cat: 'cat1',
+    name: 'ゼブラ',
+    tags: [
+      { text: '中堅国立大OK', cls: 'tag-ok' },
+      { text: '就職偏差値60', cls: 'tag-research' },
+    ],
+    memo: '独自インク技術の開発職。就職偏差値60程度でコクヨ・パイロットより入りやすい。サブ候補として押さえておく価値あり。機械・化学系を幅広く採用。',
+    schedule: [
+      { date: '7〜8月', label: '夏インターン（28卒詳細は公式確認）', badge: 'pending' },
+      { date: '2027年春', label: '本選考 ES提出', badge: 'pending' },
+    ],
+    checks: ['公式サイト確認', '夏インターンES提出', '本選考ES提出'],
+    url: 'https://www.zebra.co.jp/corp/recruit/',
+    mypage: 'https://job.mynavi.jp/28/pc/corpinfo/displayInternship/index?corpId=2640',
+  },
+  {
+    id: 'tombow', cat: 'cat1',
+    name: 'トンボ鉛筆',
+    tags: [
+      { text: '就職偏差値55', cls: 'tag-ok' },
+      { text: '穴場', cls: 'tag-research' },
+    ],
+    memo: '修正テープ・接着剤など素材研究を活かせる製品ラインナップ。就職偏差値55程度で競争率低め。機械・化学系歓迎。文具業界のリスクヘッジとして有効。',
+    schedule: [
+      { date: '7〜9月', label: '夏インターン（28卒詳細は公式確認）', badge: 'pending' },
+      { date: '2027年春', label: '本選考 ES提出', badge: 'pending' },
+    ],
+    checks: ['公式サイト確認', '夏インターンES提出', '本選考ES提出'],
+    url: 'https://www.tombow.com/sp/saiyou/',
+    mypage: 'https://www.tombow.com/sp/saiyou/',
+  },
+  {
+    id: 'naigai', cat: 'cat2',
+    name: '内外化学製品',
+    tags: [
+      { text: '共同研究先', cls: 'tag-shinshu' },
+      { text: '皮膜処理直結', cls: 'tag-research' },
+      { text: '最優先', cls: 'tag-urgent' },
+    ],
+    memo: '炭素鋼の皮膜処理で共同研究中。最大のコネクション先。推薦・早期内定への最短ルートになる可能性あり。まず指導教員に「就職先として検討している」と相談することが第一歩。インターンシップ受け入れの相談も可能かもしれない。',
+    schedule: [
+      { date: '今すぐ', label: '指導教員に相談（就職先として検討していることを伝える）', badge: 'urgent' },
+      { date: '〜2026年秋', label: '研究室訪問・会社見学の打診', badge: 'pending' },
+      { date: '2026年秋〜冬', label: '推薦状・応募書類の準備', badge: 'pending' },
+    ],
+    checks: ['指導教員に相談', '会社訪問の打診', '応募書類準備'],
+    url: 'https://naigaichemical.co.jp/',
+    mypage: 'https://naigaichemical.co.jp/',
+  },
+  {
+    id: 'nipponpaint', cat: 'cat2',
+    name: '日本ペイントグループ',
+    tags: [
+      { text: '地方国立大OK', cls: 'tag-ok' },
+      { text: '表面処理事業あり', cls: 'tag-research' },
+      { text: '採用数多い', cls: 'tag-ok' },
+    ],
+    memo: '塗料国内トップシェア。グループ内に表面処理専門会社「日本ペイント・サーフケミカルズ」あり。採用人数が多く入りやすい。炭素鋼の防食・皮膜技術と業務内容が重なる部分が大きい。',
+    schedule: [
+      { date: '7〜9月', label: '夏インターン（28卒詳細は公式確認。例年8〜9月開催）', badge: 'pending' },
+      { date: '2027年春', label: '本選考 ES提出', badge: 'pending' },
+    ],
+    checks: ['公式サイト確認・マイページ登録', '夏インターンES提出', '本選考ES提出'],
+    url: 'https://recruit.nipponpaint-holdings.com/',
+    mypage: 'https://recruit.nipponpaint-holdings.com/',
+  },
+  {
+    id: 'dic', cat: 'cat2',
+    name: 'DIC',
+    tags: [
+      { text: '地方国立大OK', cls: 'tag-ok' },
+      { text: 'インク・顔料素材', cls: 'tag-research' },
+    ],
+    memo: '印刷インキ世界首位級。文具用インクとも近い素材技術。大阪大などの採用実績多数。1DAY仕事体験インターンが例年8〜9月に開催。技術職インターンは本選考優遇あり（過去事例）。',
+    schedule: [
+      { date: '7〜8月', label: '1DAY仕事体験インターン ES提出（過去は8〜9月開催）', badge: 'pending' },
+      { date: '8〜9月', label: '1DAY仕事体験インターン参加', badge: 'pending' },
+      { date: '2027年春', label: '本選考 ES提出', badge: 'pending' },
+    ],
+    checks: ['公式サイト確認・マイページ登録', 'インターンES提出', 'インターン参加', '本選考ES提出'],
+    url: 'https://www.dic-global.com/ja/recruit/',
+    mypage: 'https://www.dic-global.com/ja/recruit/internship/',
+  },
+  {
+    id: 'ogc', cat: 'cat2',
+    name: '大阪ガスケミカル',
+    tags: [
+      { text: '特殊コーティング', cls: 'tag-research' },
+      { text: '倍率低め', cls: 'tag-ok' },
+    ],
+    memo: 'フッ素・シリコーン系の特殊コーティング専門メーカー。皮膜処理研究との親和性が高い。知名度が低い分倍率は低めで穴場。中堅規模で研究開発に直接携わりやすい環境。',
+    schedule: [
+      { date: '7〜9月', label: '夏インターン（28卒詳細は公式確認）', badge: 'pending' },
+      { date: '2027年春', label: '本選考 ES提出', badge: 'pending' },
+    ],
+    checks: ['公式サイト確認', '夏インターンES提出', '本選考ES提出'],
+    url: 'https://www.ogc.co.jp/recruit/',
+    mypage: 'https://www.ogc.co.jp/recruit/',
+  },
+  {
+    id: 'uyemura', cat: 'cat3',
+    name: '上村工業',
+    tags: [
+      { text: '地方国立大OK', cls: 'tag-ok' },
+      { text: 'めっき薬品トップ', cls: 'tag-research' },
+    ],
+    memo: '電子部品めっき薬品の国内最大手。炭素鋼皮膜処理と近い化学・電気化学領域。創業170年超の老舗で安定性高い。知名度低めだが業界内の存在感は大きい。採用幅広く地方国立大でも実績あり。',
+    schedule: [
+      { date: '7〜9月', label: '夏インターン（28卒詳細は公式確認）', badge: 'pending' },
+      { date: '2027年春', label: '本選考 ES提出', badge: 'pending' },
+    ],
+    checks: ['公式サイト確認', '夏インターンES提出', '本選考ES提出'],
+    url: 'https://www.uyemura.co.jp/recruit/',
+    mypage: 'https://www.uyemura.co.jp/recruit/',
+  },
+  {
+    id: 'sakata', cat: 'cat3',
+    name: 'サカタインクス',
+    tags: [
+      { text: '地方国立大OK', cls: 'tag-ok' },
+      { text: '印刷・機能性インク', cls: 'tag-research' },
+    ],
+    memo: '印刷インキ大手で機能性コーティング材料も展開。文具素材・表面処理との接点あり。採用人数はDICより少ないが倍率は低め。',
+    schedule: [
+      { date: '7〜9月', label: '夏インターン（28卒詳細は公式確認）', badge: 'pending' },
+      { date: '2027年春', label: '本選考 ES提出', badge: 'pending' },
+    ],
+    checks: ['公式サイト確認', '夏インターンES提出', '本選考ES提出'],
+    url: 'https://www.sakata-inks.co.jp/recruit/',
+    mypage: 'https://www.sakata-inks.co.jp/recruit/',
+  },
+  {
+    id: 'shachihata', cat: 'cat4',
+    name: 'シヤチハタ',
+    tags: [
+      { text: '中堅国立大OK', cls: 'tag-ok' },
+      { text: 'スタンプ・インク開発', cls: 'tag-research' },
+      { text: 'WLB良い', cls: 'tag-ok' },
+    ],
+    memo: '印鑑・スタンプのニッチトップ。インク・素材開発を活かせる。ワークライフバランスの良さが口コミで高評価。倍率低め・穴場候補。愛知県名古屋市本社。',
+    schedule: [
+      { date: '7〜9月', label: '夏インターン（28卒詳細は公式確認）', badge: 'pending' },
+      { date: '2027年春', label: '本選考 ES提出', badge: 'pending' },
+    ],
+    checks: ['公式サイト確認', '夏インターンES提出', '本選考ES提出'],
+    url: 'https://www.shachihata.co.jp/recruit/graduate/',
+    mypage: 'https://www.shachihata.co.jp/recruit/graduate/',
+  },
+  {
+    id: 'kingjim', cat: 'cat4',
+    name: 'キングジム',
+    tags: [
+      { text: '中堅国立大OK', cls: 'tag-ok' },
+      { text: '電子文具あり', cls: 'tag-research' },
+    ],
+    memo: 'ファイル・ラベルライター・電子文具など幅広い製品ラインナップ。機械系エンジニア採用あり。就職偏差値60程度で倍率は文具大手より低め。プラスとの比較検討もあり。',
+    schedule: [
+      { date: '7〜9月', label: '夏インターン（28卒詳細は公式確認）', badge: 'pending' },
+      { date: '2027年春', label: '本選考 ES提出', badge: 'pending' },
+    ],
+    checks: ['公式サイト確認', '夏インターンES提出', '本選考ES提出'],
+    url: 'https://www.kingjim.co.jp/company/recruit/',
+    mypage: 'https://www.kingjim.co.jp/company/recruit/',
+  },
+];
+
+let state = {};
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) state = JSON.parse(raw);
+  } catch(e) {}
+  COMPANIES.forEach(c => {
+    if (!state[c.id]) state[c.id] = { starred: false, checks: {} };
+    c.checks.forEach(ch => {
+      if (state[c.id].checks[ch] === undefined) state[c.id].checks[ch] = false;
+    });
+  });
+}
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+function toggleStar(id) {
+  state[id].starred = !state[id].starred;
+  saveState();
+  render();
+}
+
+function toggleCheck(id, ch) {
+  state[id].checks[ch] = !state[id].checks[ch];
+  saveState();
+  renderProgress();
+  document.getElementById('card-checks-' + id).innerHTML = renderChecks(id, COMPANIES.find(c => c.id === id).checks);
+}
+
+let currentFilter = 'all';
+function filter(f) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  render();
+}
+
+function badgeClass(b) {
+  if (b === 'urgent') return 'badge-urgent';
+  if (b === 'done') return 'badge-done';
+  return 'badge-pending';
+}
+function badgeText(b) {
+  if (b === 'urgent') return '要急ぎ';
+  if (b === 'done') return '完了';
+  return '未着手';
+}
+
+function renderChecks(id, checks) {
+  return checks.map(ch => {
+    const done = state[id].checks[ch];
+    return `<label class="check-item"><input type="checkbox" ${done ? 'checked' : ''} onchange="toggleCheck('${id}','${ch}')">${ch}</label>`;
+  }).join('');
+}
+
+function renderCard(c) {
+  const s = state[c.id];
+  const cat = CATEGORIES.find(ct => ct.id === c.cat);
+  return `
+  <div class="card ${s.starred ? 'starred' : ''}" id="card-${c.id}">
+    <div class="card-top">
+      <button class="card-star ${s.starred ? 'on' : ''}" onclick="toggleStar('${c.id}')" aria-label="お気に入り">★</button>
+      <div class="card-body">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span style="font-size:10px;padding:2px 8px;border-radius:99px;background:${cat.color}18;color:${cat.color};font-weight:600;">${cat.label}</span>
+        </div>
+        <div class="card-name">${c.name}</div>
+        <div class="card-tags">${c.tags.map(t => `<span class="tag ${t.cls}">${t.text}</span>`).join('')}</div>
+        <div class="card-memo">${c.memo}</div>
+        <div class="check-area" id="card-checks-${c.id}">${renderChecks(c.id, c.checks)}</div>
+        <div class="schedule">
+          <div class="schedule-title">スケジュール</div>
+          <div class="schedule-rows">
+            ${c.schedule.map(s => `
+              <div class="schedule-row">
+                <span class="schedule-date">${s.date}</span>
+                <span class="schedule-label">${s.label}<span class="schedule-badge ${badgeClass(s.badge)}">${badgeText(s.badge)}</span></span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        <div style="margin-top:10px;display:flex;gap:14px;flex-wrap:wrap;">
+          <a href="${c.url}" target="_blank" style="font-size:12px;color:#534AB7;text-decoration:none;">公式採用サイト →</a>
+          ${c.mypage ? `<a href="${c.mypage}" target="_blank" style="font-size:12px;font-weight:600;color:#fff;background:#534AB7;padding:3px 12px;border-radius:99px;text-decoration:none;">マイページへ →</a>` : ''}
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderProgress() {
+  const bars = document.getElementById('progress-bars');
+  if (!bars) return;
+  const allChecks = COMPANIES.flatMap(c => c.checks.map(ch => state[c.id].checks[ch]));
+  const done = allChecks.filter(Boolean).length;
+  const total = allChecks.length;
+  const pct = total > 0 ? Math.round(done / total * 100) : 0;
+
+  const catRows = CATEGORIES.map(cat => {
+    const cos = COMPANIES.filter(c => c.cat === cat.id);
+    const catChecks = cos.flatMap(c => c.checks.map(ch => state[c.id].checks[ch]));
+    const catDone = catChecks.filter(Boolean).length;
+    const catTotal = catChecks.length;
+    const catPct = catTotal > 0 ? Math.round(catDone / catTotal * 100) : 0;
+    return `<div class="prog-row">
+      <span class="prog-label" style="color:${cat.color};">${cat.label}</span>
+      <div class="prog-track"><div class="prog-fill" style="width:${catPct}%;background:${cat.color};"></div></div>
+      <span class="prog-num">${catDone}/${catTotal}</span>
+    </div>`;
+  }).join('');
+
+  bars.innerHTML = `<div class="prog-row">
+    <span class="prog-label" style="font-weight:600;">全体</span>
+    <div class="prog-track"><div class="prog-fill" style="width:${pct}%;background:#534AB7;"></div></div>
+    <span class="prog-num">${done}/${total}</span>
+  </div>` + catRows;
+}
+
+function render() {
+  const list = document.getElementById('company-list');
+  let visible = COMPANIES.filter(c => {
+    if (currentFilter === 'all') return true;
+    if (currentFilter === 'starred') return state[c.id].starred;
+    return c.cat === currentFilter;
+  });
+
+  document.getElementById('count-label').textContent = `${visible.length}社表示中`;
+
+  if (visible.length === 0) {
+    list.innerHTML = '<div class="empty">該当する企業がありません</div>';
+    return;
+  }
+
+  if (currentFilter === 'all' || currentFilter === 'starred') {
+    let html = '';
+    CATEGORIES.forEach(cat => {
+      const cos = visible.filter(c => c.cat === cat.id);
+      if (cos.length === 0) return;
+      html += `<div class="section">
+        <div class="section-header">
+          <div class="section-dot" style="background:${cat.color};"></div>
+          <span class="section-name">${cat.label}</span>
+          <span class="section-count">${cos.length}社</span>
+        </div>
+        ${cos.map(renderCard).join('')}
+      </div>`;
+    });
+    list.innerHTML = html;
+  } else {
+    const cat = CATEGORIES.find(ct => ct.id === currentFilter);
+    list.innerHTML = `<div class="section">
+      <div class="section-header">
+        <div class="section-dot" style="background:${cat.color};"></div>
+        <span class="section-name">${cat.label}</span>
+        <span class="section-count">${visible.length}社</span>
+      </div>
+      ${visible.map(renderCard).join('')}
+    </div>`;
+  }
+  renderProgress();
+}
+
+loadState();
+render();
+</script>
+</body>
+</html>
