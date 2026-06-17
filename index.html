@@ -50,6 +50,9 @@ main { max-width: 860px; margin: 0 auto; padding: 16px 12px; }
 .tag-ok { background: #EAF3DE; color: #3B6D11; }
 .tag-check { background: #FCF3D9; color: #8A6D1A; }
 .memo { font-size: 12px; color: #444; line-height: 1.6; margin-bottom: 10px; }
+.jobs-box { border-top: 1px solid #f0ede8; padding-top: 9px; margin-top: 9px; margin-bottom: 9px; }
+.jobs-list { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+.job-pill { font-size: 11px; padding: 3px 9px; border-radius: 99px; background: #EEF0FE; color: #3C3489; font-weight: 500; }
 
 .schedule { border-top: 1px solid #f0ede8; padding-top: 9px; margin-top: 9px; }
 .sched-title { font-size: 10px; font-weight: 600; color: #bbb; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
@@ -120,7 +123,8 @@ const CATS = [
 const COS = [
   { id:'kokuyo', cat:'cat1', name:'コクヨ',
     tags:[{t:'最終面接経験あり',c:'tag-rivalry'},{t:'信州大採用実績◎',c:'tag-shinshu'},{t:'リベンジ本命',c:'tag-research'}],
-    memo:'文具＋家具を両方手がける。炭素鋼の皮膜処理研究と素材・表面処理で接点大。2年前の最終面接では「感性・ユーザー視点」が不足していたと分析。今年は研究×接客経験を組み合わせた語りで差別化。',
+    memo:'文具＋家具を両方手がける。炭素鋼の皮膜処理研究と素材・表面処理で接点大。2年前の最終面接では「感性・ユーザー視点」が不足していたと分析。今年は研究×接客経験を組み合わせた語りで差別化。技術系区分で「特に活かせる専攻」に機械系が公式に明記されている。',
+    jobs:['技術系（機械系・電気電子系・情報工学系・建築土木系・化学物質工学系が活きる職種）'],
     schedule:[
       {date:'今すぐ', label:'インターンサイトでマイページ登録', badge:'urgent'},
       {date:'6/30（火）12:00', label:'夏インターン 応募締め切り ⚠️ あと約2週間！', badge:'urgent'},
@@ -268,6 +272,7 @@ const COS = [
   { id:'nintendo', cat:'cat5', name:'任天堂',
     tags:[{t:'夢枠・倍率最高',c:'tag-urgent'},{t:'4月入社のみ',c:'tag-research'},{t:'機構技術職あり',c:'tag-ok'}],
     memo:'「楽しいを作る」軸に最も直結するが、研究との接点は薄め。機構技術・生産技術なら機械系の知識が活きる。新卒入社は4月1日のみと公式回答されており、9月卒の場合は入社時期について個別に問い合わせが必須。倍率は数百倍規模で狭き門。',
+    jobs:['機構技術（筐体・機構設計、機構部品開発）','電気電子技術（回路設計、基板設計）','生産技術','技術系総合'],
     schedule:[
       {date:'今すぐ', label:'プレエントリー・マイページ登録', badge:'urgent'},
       {date:'6〜9月', label:'夏インターンES提出（28卒詳細は公式確認）', badge:'pending'},
@@ -279,7 +284,8 @@ const COS = [
   },
   { id:'sega', cat:'cat5', name:'セガ',
     tags:[{t:'9月入社対応◎',c:'tag-shinshu'},{t:'技術職あり',c:'tag-ok'}],
-    memo:'卒業時期に合わせて4月入社と10月入社が選択可能と公式に明記。9月卒にとって最も相性が良いゲーム会社。技術職（ハード・機構系）の募集もあり機械系の知識を活かせる可能性あり。面接は2回程度でオンライン対応。',
+    memo:'卒業時期に合わせて4月入社と10月入社が選択可能と公式に明記。9月卒にとって最も相性が良いゲーム会社。技術職（ハード・機構系）の募集もあり機械系の知識を活かせる可能性あり。面接は2回程度でオンライン対応。注意：技術職の内定者は株式会社セガフェイブに入社する仕組み（勤務地に変更はない）。',
+    jobs:['技術職：機械設計（筐体・コントローラー・メカニカルなギミックの設計）','技術職：ハードウェア設計（ゲームボード等のハード開発・ファームウェア設計）'],
     schedule:[
       {date:'今すぐ', label:'エントリー・マイページ登録', badge:'urgent'},
       {date:'6〜9月', label:'夏インターンES提出（28卒詳細は公式確認）', badge:'pending'},
@@ -291,7 +297,8 @@ const COS = [
   },
   { id:'bandainamco', cat:'cat5', name:'バンダイナムコ',
     tags:[{t:'夢枠・倍率高',c:'tag-urgent'},{t:'グループ会社多数',c:'tag-ok'}],
-    memo:'バンダイナムコエンターテインメント（ゲーム開発本体）。倍率は非常に高いが、グループに技術系の会社も多い。「楽しいを作る」軸には合致するが研究内容との直接接点は薄め。',
+    memo:'バンダイナムコエンターテインメント（ゲーム開発本体）。倍率は非常に高いが、グループに技術系の会社も多い。「楽しいを作る」軸には合致するが研究内容との直接接点は薄め。注意：本体はプログラマー・デザイナー中心の家庭用ゲームソフト開発会社で、機械系が活きる技術職は公式には明記されていない（アミューズメント施設運営のグループ会社等は別途確認要）。',
+    jobs:['※機械系が活きる技術職は本体では非公開。グループ会社（アミューズメント機器系）を別途確認'],
     schedule:[
       {date:'7〜9月', label:'夏インターン（28卒詳細は公式確認）', badge:'pending'},
       {date:'2027年春', label:'本選考 ES提出', badge:'pending'},
@@ -301,7 +308,8 @@ const COS = [
   },
   { id:'koeitecmo', cat:'cat5', name:'コーエーテクモ',
     tags:[{t:'待遇良い',c:'tag-ok'},{t:'倍率高め',c:'tag-urgent'}],
-    memo:'歴史シミュレーション・無双シリーズなどで有名。ゲーム業界内でも給与水準が高いと言われる。プログラマ・エンジニア職があり、ハード系の知識を活かせる可能性あり。',
+    memo:'歴史シミュレーション・無双シリーズなどで有名。ゲーム業界内でも給与水準が高いと言われる。注意：プログラマ・エンジニア職はソフトウェア系（ゲームエンジン・ネットワーク等）が中心で、機械系の機構設計が活きる職種は公式には明記されていない。家庭用ゲームソフト専業のため、ハード機構系の専攻活用は薄い可能性が高い。',
+    jobs:['※機械系の機構設計職は公式には見当たらず。ソフトウェアエンジニア中心'],
     schedule:[
       {date:'7〜9月', label:'夏インターン（28卒詳細は公式確認）', badge:'pending'},
       {date:'2027年春', label:'本選考 ES提出', badge:'pending'},
@@ -312,6 +320,7 @@ const COS = [
   { id:'segafave', cat:'cat5', name:'セガ フェイブ',
     tags:[{t:'機構開発で専攻直結',c:'tag-research'},{t:'倍率は本体より低め',c:'tag-ok'}],
     memo:'セガグループのプライズ・メダルゲーム機開発会社。技術職（アミューズメント機器開発）は機械系の知識を直接活かせる。ゲーム機本体より「機構を作る」志向に近く、機械システム工学科との親和性が高い穴場。',
+    jobs:['技術職：アミューズメント機器開発'],
     schedule:[
       {date:'7〜9月', label:'夏インターン（28卒詳細は公式確認）', badge:'pending'},
       {date:'2027年春', label:'本選考 ES提出（卒業時期2027年3月までと記載。9月卒は要確認）', badge:'pending'},
@@ -321,7 +330,8 @@ const COS = [
   },
   { id:'konami', cat:'cat5', name:'コナミグループ',
     tags:[{t:'メカニカル職あり',c:'tag-research'},{t:'機械系直結',c:'tag-ok'}],
-    memo:'クリエイティブ系職種に「メカニカルエンジニア」「ハードウェアエンジニア」が明確に存在。コナミデジタルエンタテインメント・コナミアミューズメント・コナミアーケードゲームスなど複数の事業会社で募集しており、機械システム工学科との接点が大きいゲーム会社の一つ。',
+    memo:'クリエイティブ系職種に「メカニカルエンジニア」「ハードウェアエンジニア」が明確に存在。コナミデジタルエンタテインメント・コナミアミューズメント・コナミアーケードゲームスなど複数の事業会社で募集しており、機械システム工学科との接点が大きいゲーム会社の一つ。実際に理工学部機械工学科出身の社員がメカニカルエンジニアとしてアーケード筐体の設計から生産まで3D CADで担当している実例あり。',
+    jobs:['メカニカルエンジニア（筐体設計、3D CAD製図、試作・量産）','ハードウェアエンジニア（筐体設計、配線、ファームウェア）'],
     schedule:[
       {date:'7〜9月', label:'夏インターン（28卒詳細は公式確認）', badge:'pending'},
       {date:'2027年春', label:'本選考 ES提出', badge:'pending'},
@@ -331,7 +341,8 @@ const COS = [
   },
   { id:'capcom', cat:'cat5', name:'カプコン',
     tags:[{t:'倍率約17倍',c:'tag-ok'},{t:'業務用筐体開発あり',c:'tag-research'}],
-    memo:'ゲームソフト開発がメインだが、業務用ゲーム機器・遊技機向け筐体の開発製造も手がける。採用倍率は約17倍で任天堂よりは入りやすい部類。モンスターハンター等の人気タイトルあり待遇も良い。',
+    memo:'ゲームソフト開発がメインだが、業務用ゲーム機器・遊技機向け筐体の開発製造も手がける。採用倍率は約17倍で任天堂よりは入りやすい部類。モンスターハンター等の人気タイトルあり待遇も良い。注意：機械系の機構設計職が明確に存在するかは公式サイトで要確認、業務用筐体部門への配属可能性は不明確。',
+    jobs:['※業務用筐体開発の機構設計職の有無は公式サイトで要確認'],
     schedule:[
       {date:'5月', label:'オープンカンパニー（5/22開催などの過去例あり）', badge:'pending'},
       {date:'7〜9月', label:'夏インターン（28卒詳細は公式確認）', badge:'pending'},
@@ -339,46 +350,6 @@ const COS = [
     ],
     checks:['マイページ登録','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
     url:'https://www.capcom.co.jp/recruit/',
-  },
-  { id:'squareenix', cat:'cat5', name:'スクウェア・エニックス',
-    tags:[{t:'秋卒業に個別対応実績あり',c:'tag-shinshu'},{t:'人気タイトル多数',c:'tag-ok'}],
-    memo:'秋卒業者について本人と受入部門の状況を勘案し個別に入社時期を検討すると公式回答、過去に4月以外で入社した実績もあるとのこと。9月卒にとって心理的ハードルが低い大手。職種は1つのみ選択制で併願不可のため、エントリー前に方向性を絞る必要あり。ゲームデザイナー職は「遊び」をデザインする仕事でバトル・クエスト等のシステム企画を担当、マイクラ教材開発の経験が活きる職種。',
-    schedule:[
-      {date:'7〜9月', label:'夏インターン（28卒詳細は公式確認）', badge:'pending'},
-      {date:'2027年春', label:'本選考 ES提出（職種は1つのみ選択、併願不可）', badge:'pending'},
-    ],
-    checks:['マイページ登録','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
-    url:'https://www.jp.square-enix.com/recruit/fresh/',
-  },
-  { id:'bandainamcostudios', cat:'cat5', name:'バンダイナムコスタジオ',
-    tags:[{t:'開発専門会社',c:'tag-ok'},{t:'エンジニア職複数',c:'tag-research'}],
-    memo:'バンダイナムコグループのゲーム開発専門会社。エンジニア・アーティスト等の職種別採用。グループ内でも開発に特化しており、「ものづくり」志向に合いやすい。倍率はバンダイナムコエンターテインメント本体よりやや低め。',
-    schedule:[
-      {date:'7〜9月', label:'夏インターン（28卒詳細は公式確認）', badge:'pending'},
-      {date:'2027年春', label:'本選考 ES提出', badge:'pending'},
-    ],
-    checks:['マイページ登録','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
-    url:'https://www.bandainamcostudios.com/recruit/graduate',
-  },
-  { id:'gamefreak', cat:'cat5', name:'ゲームフリーク',
-    tags:[{t:'プランナー職◎',c:'tag-urgent'},{t:'企画書選考',c:'tag-research'}],
-    memo:'ポケモンシリーズ開発会社。プランナー職はバトル・キャラクターAI・フィールド・レベルデザイン・UI・ストーリー等の領域に分かれて配属。選考は企画書＋エントリーシート提出という独特の方式。マイクラ教材開発でのステージ設計・難易度調整の経験を企画書に落とし込みやすい、プランナー志望に最も相性が良い会社の一つ。',
-    schedule:[
-      {date:'7〜9月', label:'夏インターン（28卒詳細は公式確認）', badge:'pending'},
-      {date:'2027年春', label:'本選考 企画書＋ES提出', badge:'pending'},
-    ],
-    checks:['企画書の準備開始','マイページ登録','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
-    url:'https://www.gamefreak.co.jp/recruit/',
-  },
-  { id:'1upstudio', cat:'cat5', name:'1-UP Studio（任天堂グループ）',
-    tags:[{t:'マリオ系レベルデザイン',c:'tag-research'},{t:'任天堂より入りやすい',c:'tag-ok'}],
-    memo:'任天堂グループのゲーム開発会社。スーパーマリオ オデッセイ等のレベルデザインを担当した実績あり。「ステージ制作・ギミックの企画立案」が主業務でマイクラ教材開発の経験と直結。任天堂本体よりは採用人数・知名度の壁が低く、現実的な任天堂グループへの入口になり得る。',
-    schedule:[
-      {date:'7〜9月', label:'夏インターン（28卒詳細は公式確認）', badge:'pending'},
-      {date:'2027年春', label:'本選考 ES提出', badge:'pending'},
-    ],
-    checks:['マイページ登録','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
-    url:'https://1-up-studio.jp/recruit/',
   },
   { id:'bandai', cat:'cat6', name:'バンダイ',
     tags:[{t:'就職偏差値60・玩具最大手',c:'tag-research'},{t:'年収業界トップ',c:'tag-ok'}],
@@ -535,6 +506,7 @@ function cardHTML(co) {
         <div class="card-name">${co.name}</div>
         <div class="tags">${co.tags.map(t=>`<span class="tag ${t.c}">${t.t}</span>`).join('')}</div>
         <div class="memo">${co.memo}</div>
+        ${co.jobs?`<div class="jobs-box"><div class="sched-title">募集職種（機械系が活きる技術職のみ）</div><div class="jobs-list">${co.jobs.map(j=>`<span class="job-pill">${j}</span>`).join('')}</div></div>`:''}
         <div class="checks" id="checks_${co.id}">${checksHTML(co)}</div>
         <div class="schedule">
           <div class="sched-title">スケジュール</div>
