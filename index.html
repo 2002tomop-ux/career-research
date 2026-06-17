@@ -48,6 +48,7 @@ main { max-width: 860px; margin: 0 auto; padding: 16px 12px; }
 .tag-rivalry { background: #FAEEDA; color: #854F0B; }
 .tag-urgent { background: #FCEBEB; color: #A32D2D; }
 .tag-ok { background: #EAF3DE; color: #3B6D11; }
+.tag-check { background: #FCF3D9; color: #8A6D1A; }
 .memo { font-size: 12px; color: #444; line-height: 1.6; margin-bottom: 10px; }
 
 .schedule { border-top: 1px solid #f0ede8; padding-top: 9px; margin-top: 9px; }
@@ -88,6 +89,7 @@ main { max-width: 860px; margin: 0 auto; padding: 16px 12px; }
     <button class="filter-btn" data-f="cat3">③ 精密・表面処理</button>
     <button class="filter-btn" data-f="cat4">④ 精密機器・周辺</button>
     <button class="filter-btn" data-f="cat5">⑤ ゲーム開発</button>
+    <button class="filter-btn" data-f="cat6">⑥ おもちゃ・玩具</button>
     <button class="filter-btn" data-f="starred">★ お気に入り</button>
   </div>
 </header>
@@ -110,6 +112,7 @@ const CATS = [
   { id:'cat3', label:'③ 精密部品・表面処理', color:'#378ADD' },
   { id:'cat4', label:'④ 精密機器・文具周辺', color:'#BA7517' },
   { id:'cat5', label:'⑤ ゲーム開発メーカー', color:'#D85A30' },
+  { id:'cat6', label:'⑥ おもちゃ・玩具メーカー', color:'#0F8B6C' },
 ];
 
 const COS = [
@@ -354,6 +357,59 @@ const COS = [
     ],
     checks:['マイページ登録','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
     url:'https://www.bandainamcostudios.com/recruit/graduate',
+  },
+  { id:'bandai', cat:'cat6', name:'バンダイ',
+    tags:[{t:'就職偏差値60・玩具最大手',c:'tag-research'},{t:'年収業界トップ',c:'tag-ok'}],
+    memo:'玩具業界就職偏差値60で最高位、年収も業界トップの約1053万円水準。プラモデル・フィギュア等の精密な製品開発があり、機械系の知識を活かせる可能性がある。倍率は高いがガンプラなど男性人気が高い製品ラインも持つ。',
+    schedule:[
+      {date:'6/1〜7/21 12:00', label:'28卒夏インターン エントリー期間（要急ぎ）', badge:'urgent'},
+      {date:'2027年春', label:'本選考 ES提出', badge:'pending'},
+    ],
+    checks:['マイページ登録','夏インターンES提出（7/21締め）','本選考ES提出','マイナビエントリー済み'],
+    url:'https://www.bandai.co.jp/recruit/grad/',
+  },
+  { id:'takaratomy', cat:'cat6', name:'タカラトミーグループ',
+    tags:[{t:'機械・機器志望を明記',c:'tag-shinshu'},{t:'就職偏差値57',c:'tag-research'}],
+    memo:'インターンの対象者紹介に「機械・機器に携わりたい」という項目が明記されており、機械系出身者を意識した募集をしている数少ない玩具メーカー。トミカ・プラレールなど機構を持つ製品が多く専攻との接点が大きい。創業100年の安定企業。',
+    schedule:[
+      {date:'7〜9月', label:'1dayセミナー・夏インターン（28卒詳細は公式確認）', badge:'pending'},
+      {date:'2027年春', label:'本選考 ES提出', badge:'pending'},
+    ],
+    checks:['マイページ登録','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
+    url:'https://www.takaratomy.co.jp/company/recruit/',
+    mypage:'https://mypage.3010.i-webs.jp/takaratomygroup2027/',
+    mynavi:'https://job.mynavi.jp/28/pc/search/corp66225/outline.html',
+  },
+  { id:'epoch', cat:'cat6', name:'エポック社',
+    tags:[{t:'シルバニア・アクアビーズ',c:'tag-ok'},{t:'グローバル展開強い',c:'tag-ok'}],
+    memo:'シルバニアファミリー・アクアビーズで知られ、海外売上比率6割と非常にグローバル。企画から開発・製造・販売まで一気通貫で行う体制。知名度の高さに対して採用人数は少なめで倍率はやや高い。',
+    schedule:[
+      {date:'7〜9月', label:'夏インターン（28卒詳細は公式確認）', badge:'pending'},
+      {date:'2027年春', label:'本選考 ES提出', badge:'pending'},
+    ],
+    checks:['マイページ登録','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
+    url:'https://epoch.jp/recruit/',
+    mynavi:'https://job.mynavi.jp/27/pc/search/corp66177/outline.html',
+  },
+  { id:'segatoys', cat:'cat6', name:'セガトイズ',
+    tags:[{t:'就職偏差値51',c:'tag-ok'},{t:'電子玩具に強い',c:'tag-research'}],
+    memo:'セガグループの玩具メーカー。電子ギミックを多用した玩具（ぬいぐるみ型ロボット等）が特徴で、機械・電気系の知識を活かしやすい。就職偏差値51と玩具大手より入りやすい部類。',
+    schedule:[
+      {date:'7〜9月', label:'夏インターン（28卒詳細は公式確認）', badge:'pending'},
+      {date:'2027年春', label:'本選考 ES提出', badge:'pending'},
+    ],
+    checks:['マイページ登録','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
+    url:'https://www.segatoys.co.jp/company/recruit/',
+  },
+  { id:'sanrio', cat:'cat6', name:'サンリオ',
+    tags:[{t:'就職偏差値55',c:'tag-ok'},{t:'一般選考とクリエイター選考は併願不可',c:'tag-check'}],
+    memo:'キャラクタービジネス中心で機械系との直接接点は薄いが、グッズ製造の品質管理・生産技術といった切り口はある。総合職一般選考とデザイナー/商品プランナーのクリエイター選考は併願不可のため事前に方向性を決める必要あり。',
+    schedule:[
+      {date:'7〜9月', label:'夏インターン（28卒詳細は公式確認）', badge:'pending'},
+      {date:'2027年春', label:'本選考 ES提出（一般選考かクリエイター選考かを選択）', badge:'pending'},
+    ],
+    checks:['マイページ登録（2027年卒エントリー）','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
+    url:'https://corporate.sanrio.co.jp/recruit/',
   },
 ];
 
