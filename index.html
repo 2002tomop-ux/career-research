@@ -91,7 +91,6 @@ main { max-width: 860px; margin: 0 auto; padding: 16px 12px; }
     <button class="filter-btn" data-f="cat5">⑤ ゲーム開発</button>
     <button class="filter-btn" data-f="cat6">⑥ おもちゃ・玩具</button>
     <button class="filter-btn" data-f="cat7">⑦ 家具×メカニック</button>
-    <button class="filter-btn" data-f="cat8">⑧ 腕時計</button>
     <button class="filter-btn" data-f="starred">★ お気に入り</button>
   </div>
 </header>
@@ -116,7 +115,6 @@ const CATS = [
   { id:'cat5', label:'⑤ ゲーム開発メーカー', color:'#D85A30' },
   { id:'cat6', label:'⑥ おもちゃ・玩具メーカー', color:'#0F8B6C' },
   { id:'cat7', label:'⑦ 家具×メカニック', color:'#6B4E9E' },
-  { id:'cat8', label:'⑧ 腕時計メーカー', color:'#A0522D' },
 ];
 
 const COS = [
@@ -453,38 +451,6 @@ const COS = [
     ],
     checks:['新卒採用の有無を確認','マイページ登録','本選考ES提出'],
     url:'https://www.flexispot.jp/',
-  },
-  { id:'citizen', cat:'cat8', name:'シチズン時計',
-    tags:[{t:'機構×表面処理が直結',c:'tag-urgent'},{t:'生産技術で表面処理職あり',c:'tag-shinshu'}],
-    memo:'製品開発・設計職では時計の機構（歯車・回路・電池・アンテナ等）の開発設計を担当し、生産技術では表面処理技術開発も明確に職務として存在。炭素鋼の皮膜処理研究が最も直接的に活かせる「メカニック系」企業の一つ。文房具のノック機構と同じ「シンプルだが精密」という方向性に近い。',
-    schedule:[
-      {date:'7〜9月', label:'夏インターン（28卒詳細は公式確認）', badge:'pending'},
-      {date:'2027年春', label:'本選考 ES提出', badge:'pending'},
-    ],
-    checks:['マイページ登録','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
-    url:'https://www.citizen.co.jp/recruit/top.html',
-  },
-  { id:'seikowatch', cat:'cat8', name:'セイコーウオッチ',
-    tags:[{t:'文理不問・機構開発あり',c:'tag-ok'},{t:'技術系総合職',c:'tag-research'}],
-    memo:'技術系総合職で要素開発・機構開発・設計・外装開発・設計・回路設計を担当。国籍・性別・文系理系・専攻内容を問わないオープンな採用方針。世界初のクオーツウォッチなど革新の歴史を持ち、「精密な機構を作る」志向に直結する老舗ブランド。',
-    schedule:[
-      {date:'今すぐ', label:'マイページ登録（2026年新卒採用マイページが既オープン）', badge:'urgent'},
-      {date:'7〜9月', label:'夏インターン（28卒詳細は公式確認）', badge:'pending'},
-      {date:'2027年春', label:'本選考 ES提出', badge:'pending'},
-    ],
-    checks:['マイページ登録','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
-    url:'https://www.seikowatches.com/jp-ja/corporate/special/recruit/',
-    mypage:'https://mypage.3030.i-webs.jp/seiko2026/',
-  },
-  { id:'seikogroup', cat:'cat8', name:'セイコーグループ',
-    tags:[{t:'事業領域が広い',c:'tag-ok'},{t:'各社個別選考',c:'tag-check'}],
-    memo:'腕時計だけでなく電子部品・精密部品・工作機械・プリンティングデバイスなど幅広い事業を展開するグループ。各社個別選考だがエントリー情報は共有される仕組み。「精密機構」のものづくりという軸では選択肢が広い。',
-    schedule:[
-      {date:'7〜9月', label:'夏インターン（28卒詳細は公式確認）', badge:'pending'},
-      {date:'2027年春', label:'本選考 ES提出（グループ各社個別選考）', badge:'pending'},
-    ],
-    checks:['マイページ登録','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
-    url:'https://www.seiko.co.jp/recruit/',
   },
 ];
 
