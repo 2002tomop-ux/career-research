@@ -87,6 +87,7 @@ main { max-width: 860px; margin: 0 auto; padding: 16px 12px; }
     <button class="filter-btn" data-f="cat2">② インク・塗料</button>
     <button class="filter-btn" data-f="cat3">③ 精密・表面処理</button>
     <button class="filter-btn" data-f="cat4">④ 精密機器・周辺</button>
+    <button class="filter-btn" data-f="cat5">⑤ ゲーム開発</button>
     <button class="filter-btn" data-f="starred">★ お気に入り</button>
   </div>
 </header>
@@ -108,6 +109,7 @@ const CATS = [
   { id:'cat2', label:'② インク・塗料・コーティング', color:'#1D9E75' },
   { id:'cat3', label:'③ 精密部品・表面処理', color:'#378ADD' },
   { id:'cat4', label:'④ 精密機器・文具周辺', color:'#BA7517' },
+  { id:'cat5', label:'⑤ ゲーム開発メーカー', color:'#D85A30' },
 ];
 
 const COS = [
@@ -257,6 +259,60 @@ const COS = [
     ],
     checks:['マイページ登録','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
     url:'https://www.kingjim.co.jp/company/recruit/',
+  },
+  { id:'nintendo', cat:'cat5', name:'任天堂',
+    tags:[{t:'夢枠・倍率最高',c:'tag-urgent'},{t:'4月入社のみ',c:'tag-research'},{t:'機構技術職あり',c:'tag-ok'}],
+    memo:'「楽しいを作る」軸に最も直結するが、研究との接点は薄め。機構技術・生産技術なら機械系の知識が活きる。新卒入社は4月1日のみと公式回答されており、9月卒の場合は入社時期について個別に問い合わせが必須。倍率は数百倍規模で狭き門。',
+    schedule:[
+      {date:'今すぐ', label:'プレエントリー・マイページ登録', badge:'urgent'},
+      {date:'6〜9月', label:'夏インターンES提出（28卒詳細は公式確認）', badge:'pending'},
+      {date:'2027年春', label:'本選考 ES提出（4月入社のみ。9月卒は要相談）', badge:'pending'},
+    ],
+    checks:['プレエントリー・マイページ登録','入社時期について問い合わせ','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
+    url:'https://www.nintendo.co.jp/jobs/recruit/index.html',
+    mypage:'https://www.nintendo.co.jp/jobs/recruit/entry_logon/index.html',
+  },
+  { id:'sega', cat:'cat5', name:'セガ',
+    tags:[{t:'9月入社対応◎',c:'tag-shinshu'},{t:'技術職あり',c:'tag-ok'}],
+    memo:'卒業時期に合わせて4月入社と10月入社が選択可能と公式に明記。9月卒にとって最も相性が良いゲーム会社。技術職（ハード・機構系）の募集もあり機械系の知識を活かせる可能性あり。面接は2回程度でオンライン対応。',
+    schedule:[
+      {date:'今すぐ', label:'エントリー・マイページ登録', badge:'urgent'},
+      {date:'6〜9月', label:'夏インターンES提出（28卒詳細は公式確認）', badge:'pending'},
+      {date:'2027年春', label:'本選考 ES提出（4月／10月入社を選択可）', badge:'pending'},
+    ],
+    checks:['エントリー・マイページ登録','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
+    url:'https://www.sega.co.jp/recruit/fresh/',
+    mypage:'https://mypage.3010.i-webs.jp/sega2027/',
+  },
+  { id:'bandainamco', cat:'cat5', name:'バンダイナムコ',
+    tags:[{t:'夢枠・倍率高',c:'tag-urgent'},{t:'グループ会社多数',c:'tag-ok'}],
+    memo:'バンダイナムコエンターテインメント（ゲーム開発本体）。倍率は非常に高いが、グループに技術系の会社も多い。「楽しいを作る」軸には合致するが研究内容との直接接点は薄め。',
+    schedule:[
+      {date:'7〜9月', label:'夏インターン（28卒詳細は公式確認）', badge:'pending'},
+      {date:'2027年春', label:'本選考 ES提出', badge:'pending'},
+    ],
+    checks:['マイページ登録','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
+    url:'https://www.bandainamcoent.co.jp/recruit/',
+  },
+  { id:'koeitecmo', cat:'cat5', name:'コーエーテクモ',
+    tags:[{t:'待遇良い',c:'tag-ok'},{t:'倍率高め',c:'tag-urgent'}],
+    memo:'歴史シミュレーション・無双シリーズなどで有名。ゲーム業界内でも給与水準が高いと言われる。プログラマ・エンジニア職があり、ハード系の知識を活かせる可能性あり。',
+    schedule:[
+      {date:'7〜9月', label:'夏インターン（28卒詳細は公式確認）', badge:'pending'},
+      {date:'2027年春', label:'本選考 ES提出', badge:'pending'},
+    ],
+    checks:['マイページ登録','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
+    url:'https://www.koeitecmo.co.jp/recruit/',
+  },
+  { id:'segafave', cat:'cat5', name:'セガ フェイブ',
+    tags:[{t:'機構開発で専攻直結',c:'tag-research'},{t:'倍率は本体より低め',c:'tag-ok'}],
+    memo:'セガグループのプライズ・メダルゲーム機開発会社。技術職（アミューズメント機器開発）は機械系の知識を直接活かせる。ゲーム機本体より「機構を作る」志向に近く、機械システム工学科との親和性が高い穴場。',
+    schedule:[
+      {date:'7〜9月', label:'夏インターン（28卒詳細は公式確認）', badge:'pending'},
+      {date:'2027年春', label:'本選考 ES提出（卒業時期2027年3月までと記載。9月卒は要確認）', badge:'pending'},
+    ],
+    checks:['マイページ登録','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
+    url:'https://www.segafave.co.jp/recruit/',
   },
 ];
 
