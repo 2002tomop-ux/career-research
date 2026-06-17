@@ -90,6 +90,7 @@ main { max-width: 860px; margin: 0 auto; padding: 16px 12px; }
     <button class="filter-btn" data-f="cat4">④ 精密機器・周辺</button>
     <button class="filter-btn" data-f="cat5">⑤ ゲーム開発</button>
     <button class="filter-btn" data-f="cat6">⑥ おもちゃ・玩具</button>
+    <button class="filter-btn" data-f="cat7">⑦ 家具×メカニック</button>
     <button class="filter-btn" data-f="starred">★ お気に入り</button>
   </div>
 </header>
@@ -113,6 +114,7 @@ const CATS = [
   { id:'cat4', label:'④ 精密機器・文具周辺', color:'#BA7517' },
   { id:'cat5', label:'⑤ ゲーム開発メーカー', color:'#D85A30' },
   { id:'cat6', label:'⑥ おもちゃ・玩具メーカー', color:'#0F8B6C' },
+  { id:'cat7', label:'⑦ 家具×メカニック', color:'#6B4E9E' },
 ];
 
 const COS = [
@@ -410,6 +412,45 @@ const COS = [
     ],
     checks:['マイページ登録（2027年卒エントリー）','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
     url:'https://corporate.sanrio.co.jp/recruit/',
+  },
+  { id:'okamura', cat:'cat7', name:'オカムラ',
+    tags:[{t:'創業者が航空機技術',c:'tag-research'},{t:'産業機器も展開',c:'tag-shinshu'}],
+    memo:'オフィス家具と産業用機器の製造で国内トップクラスのシェア。創業者が航空機製造のバックグラウンドを持ち高い技術力が製品に反映されている。電動昇降デスク・可動式チェアなどメカニズムを持つ製品が多く、機械系の知識を最も直接活かせる家具メーカーの一つ。研究テーマの表面処理技術もスチール家具の塗装・耐久性向上に応用できる可能性あり。',
+    schedule:[
+      {date:'7〜9月', label:'夏インターン（28卒詳細は公式確認）', badge:'pending'},
+      {date:'2027年春', label:'本選考 ES提出', badge:'pending'},
+    ],
+    checks:['マイページ登録','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
+    url:'https://www.okamura.co.jp/recruit/',
+  },
+  { id:'itoki', cat:'cat7', name:'イトーキ',
+    tags:[{t:'創業130年超',c:'tag-ok'},{t:'ABW提案に強い',c:'tag-ok'}],
+    memo:'1890年創業のオフィス家具大手。可動式パーティションや昇降機構を持つABW(Activity Based Working)対応家具を展開。コクヨ・オカムラと並ぶ4大メーカーの一角で、機械系エンジニアの採用実績もある。',
+    schedule:[
+      {date:'7〜9月', label:'夏インターン（28卒詳細は公式確認）', badge:'pending'},
+      {date:'2027年春', label:'本選考 ES提出', badge:'pending'},
+    ],
+    checks:['マイページ登録','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
+    url:'https://www.itoki.jp/recruit/',
+  },
+  { id:'uchida', cat:'cat7', name:'内田洋行',
+    tags:[{t:'ICT×家具に強い',c:'tag-ok'},{t:'4大メーカーの一角',c:'tag-ok'}],
+    memo:'オフィス家具4大メーカーの一角。家具に加えてICTソリューション販売にも強みを持つ。電子黒板や昇降式の教育機関向け家具など、メカトロニクス的要素を含む製品もある。',
+    schedule:[
+      {date:'7〜9月', label:'夏インターン（28卒詳細は公式確認）', badge:'pending'},
+      {date:'2027年春', label:'本選考 ES提出', badge:'pending'},
+    ],
+    checks:['マイページ登録','夏インターンES提出','本選考ES提出','マイナビエントリー済み'],
+    url:'https://www.uchida.co.jp/company/recruit/',
+  },
+  { id:'flexispot', cat:'cat7', name:'FlexiSpot（モットジャパン）',
+    tags:[{t:'昇降デスク専門',c:'tag-research'},{t:'急成長ベンチャー系',c:'tag-check'}],
+    memo:'昇降式デスク・モニターアームなど電動メカニズムに特化した製品展開で急成長中。大手と比べると採用情報は少なめで新卒採用の実施有無は要確認だが、最も直接的に「電動昇降の機構」を扱っている会社として研究テーマとの接点は大きい。',
+    schedule:[
+      {date:'要確認', label:'新卒採用の有無・スケジュールを公式サイトで確認', badge:'pending'},
+    ],
+    checks:['新卒採用の有無を確認','マイページ登録','本選考ES提出'],
+    url:'https://www.flexispot.jp/',
   },
 ];
 
